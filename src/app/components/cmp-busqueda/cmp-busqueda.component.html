@@ -1,0 +1,33 @@
+<div class="bg-info bg-gradient min-vh-100">
+  <div class="input-group pt-4 pb-4 w-50 h-25">
+    <input class="form-control" name="query" placeholder="Ingresa tu búsqueda" type="text" [(ngModel)]="queryBusqueda" id="btn-search">
+    <button class="btn btn-primary" type="button" (click)="realizarBusqueda()" aria-describedby="btn-search">Buscar</button>
+  </div>
+
+  <div *ngIf="resultadoBusqueda; else elseBlock">
+    <h3 class="text-center my-4">Resultados:
+      <b class="text-danger">{{ resultadoBusqueda.total_count }}</b>
+    </h3>
+
+    <div class="container row">
+      <div class="card mb-4 px-0 shadow" style="width: 18rem;" *ngFor="let elemento of resultadoBusqueda.items">
+        <img class="card-img-top" [src]="elemento.owner.avatar_url" alt="">
+        <div class="card-body">
+          <a class="card-title" [href]="elemento.html_url">
+            <h4>{{elemento.name}}
+              <small>by {{elemento.owner.login}}</small>
+            </h4>
+          </a>
+          <p class="card-text my-2"> {{elemento.description}}</p>
+        </div>
+        <div class="card-footer w-100">
+          <small class="text-muted">Created On: {{elemento.created_at | date:'fullDate'}}</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <ng-template class="container row" #elseBlock>
+    <div class="fs-3 text-center mt-4">Loading...</div>
+  </ng-template>
+</div>
